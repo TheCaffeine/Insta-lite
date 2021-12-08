@@ -41,7 +41,7 @@ def index(request):
         form = PostForm()
     params = {
         'images': images,
-       
+        'form': form,
         'users': users,
 
     }
