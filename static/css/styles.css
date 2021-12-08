@@ -11,9 +11,7 @@
 
 }
 
-h1{
-    color:green;
-}
+
 .form-text, .asteriskField{
     display:none;
 }
@@ -106,10 +104,10 @@ body{
     font-size:14px;
 }
 .user-details{
-    margin-left:-
+    margin-left:-30px;
 }
 .userinfo{
-    margin-top:
+    margin-top:24px;
 }
 .username{
     font-size:30px;
