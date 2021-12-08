@@ -97,7 +97,9 @@ def user_profile(request, username):
 @login_required(login_url='login')
 def post_comment(request, id):
     image = get_object_or_404(Post, pk=id)
-    
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        is_liked = True
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -111,7 +113,7 @@ def post_comment(request, id):
     params = {
         'image': image,
         'form': form,
-      
+        'is_liked': is_liked,
         'total_likes': image.total_likes()
     }
     return render(request, 'instagram/single_post.html', params)
@@ -158,7 +160,16 @@ class PostLikeAPIToggle(APIView):
         return Response(data)
 
 
-
+def like_post(request):
+    # image = get_object_or_404(Post, id=request.POST.get('image_id'))
+    image = get_object_or_404(Post, id=request.POST.get('id'))
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
+        is_liked = False
+    else:
+        image.likes.add(request.user)
+        is_liked = False
 
     params = {
         'image': image,
