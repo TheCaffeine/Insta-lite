@@ -29,7 +29,7 @@ def signup(request):
 @login_required(login_url='login')
 def index(request):
     images = Post.objects.all()
-  
+    users = User.objects.exclude(id=request.user.id)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
