@@ -50,7 +50,7 @@ def index(request):
 
 @login_required(login_url='login')
 def profile(request, username):
-    images = request.user.profile.posts.all()
+    
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -64,7 +64,7 @@ def profile(request, username):
     params = {
         'user_form': user_form,
         'prof_form': prof_form,
-        'images': images,
+       
 
     }
     return render(request, 'instagram/profile.html', params)
@@ -98,18 +98,7 @@ def user_profile(request, username):
 def post_comment(request, id):
     image = get_object_or_404(Post, pk=id)
     is_liked = False
-    if image.likes.filter(id=request.user.id).exists():
-        is_liked = True
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            savecomment = form.save(commit=False)
-            savecomment.post = image
-            savecomment.user = request.user.profile
-            savecomment.save()
-            return HttpResponseRedirect(request.path_info)
-    else:
-        form = CommentForm()
+  
     params = {
         'image': image,
         'form': form,
