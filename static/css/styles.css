@@ -125,8 +125,6 @@ body{
 .user a:hover{
     text-decoration:none;
 }
-.col-form-label{
-    font-size:14;
 }
 #overlay{
     display: none;
